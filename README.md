@@ -14,7 +14,7 @@
     Humberto Ramone Borges Barbosa RA: 125111356299</br>
     Samuel Carvalho dos Santos - RA: 125111359670 </br>
     Laryssa Laysa Amorim Silva - RA: 125111366892 </br>
-    Vanessa  - RA: </br>
+    Vanessa Souza Costa - RA: 125111368528</br>
     Gabriel Henrique Brigatto - RA: 125111358404 </br>
     Felipe - RA: </br>
   </p>
