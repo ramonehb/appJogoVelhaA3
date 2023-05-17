@@ -16,6 +16,6 @@
     Laryssa Laysa Amorim Silva - RA: 125111366892 </br>
     Vanessa Souza Costa - RA: 125111368528</br>
     Gabriel Henrique Brigatto - RA: 125111358404 </br>
-    Felipe - RA: </br>
+    Luiz Felipe Narcizo de Oliveira - RA: 125111374781</br>
   </p>
  </div>
