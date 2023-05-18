@@ -12,6 +12,9 @@ public class Client {
             var socket = new Socket("localhost", 12345);
             System.out.println("Conectado ao servidor.");
 
+            var thread = new Thread(new RecebeMensagemServer(socket));
+            thread.start();
+
         } catch (IOException e) {
             e.printStackTrace();
             leitor.close();
