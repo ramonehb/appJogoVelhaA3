@@ -71,7 +71,23 @@ public class Server {
                         enviarMensagemParaTodos("INICIAR_JOGO");
                         enviarMensagemParaTodos("JOGADOR_ATUAL;" + jogadorAtual);
                     }
+
+                    while (leitor.hasNextLine()){
+                        var mensagem = leitor.nextLine();
+
+                        if (mensagem.startsWith("jogada:")) {
+                            var partes = mensagem.split(":");
+                            var posicao = Integer.parseInt(partes[1]);
+                            var jogador = escritores.indexOf(escritor) == 0 ? 'X' : 'O';
+                            numJogadas++;
+    
+                            if (jogador == 'X' && jogadorAtual == 1 || jogador == 'O' && jogadorAtual == 2) {
+                                enviarMensagemParaTodos("Jogada valida");
+                            }
+                        }
+                    }
                 } catch (Exception e) {
+                    e.printStackTrace();
                 }
             }
 

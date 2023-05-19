@@ -1,5 +1,6 @@
 package Client;
 
+import java.io.IOException;
 import java.net.Socket;
 import java.util.Scanner;
 
@@ -20,12 +21,22 @@ public class RecebeMensagemServer implements Runnable{
                 var mensagem = leitor.nextLine();
 
                 if (mensagem.equals("JOGADOR_1")) {
-                    System.out.println("Você é o jogador 1 (X).");
+                    System.out.println("Você é o jogador 1 (X)");
                 } else if (mensagem.equals("JOGADOR_2")) {
-                    System.out.println("Você é o jogador 2 (O).");
+                    System.out.println("Você é o jogador 2 (O)");
                 } else if(mensagem.equals("INICIAR_JOGO")){
-                    System.out.println("Jogo da Velha iniciado!");
+                    System.out.println("Jogo da Velha iniciado");
                     tabuleiro = new char[9];
+                    exibirTabuleiro(tabuleiro);
+                } else if (mensagem.startsWith("JOGADA_VALIDA")) {
+                    System.out.println("Tabuleiro atual:");
+
+                    var partes = mensagem.split(";");
+                    var posicao = Integer.parseInt(partes[1]);
+                    var jogador = partes[2].charAt(0);
+
+                    limpaTerminal();
+                    atualizarTabuleiro(posicao, jogador);
                     exibirTabuleiro(tabuleiro);
                 }
             }
@@ -50,5 +61,20 @@ public class RecebeMensagemServer implements Runnable{
         System.out.println("-----------");
         System.out.println("  " + tabuleiro[6] + " | " + tabuleiro[7] + " | " + tabuleiro[8]);
         System.out.println();
+    }
+
+    private void atualizarTabuleiro(int posicao, char jogador) {
+        tabuleiro[posicao] = jogador;
+    }
+    
+    private void limpaTerminal(){
+        try {
+            ProcessBuilder processBuilder = new ProcessBuilder("cmd", "/c", "cls");
+
+            Process process = processBuilder.inheritIO().start();
+            process.waitFor();
+        } catch (IOException | InterruptedException e) {
+            e.printStackTrace();
+        }
     }
 }
