@@ -6,12 +6,12 @@ import java.util.Scanner;
 
 public class Client {
     public static void main(String[] args) {
-        var leitor = new Scanner(System.in);
+        Scanner leitor = new Scanner(System.in);
         try {
-            var socket = new Socket("localhost", 12345);
+            Socket socket = new Socket("localhost", 12345);
             System.out.println("Conectado ao servidor.");
 
-            var thread = new Thread(new RecebeMensagemServer(socket));
+            Thread thread = new Thread(new RecebeMensagemServer(socket));
             thread.start();
 
         } catch (IOException e) {

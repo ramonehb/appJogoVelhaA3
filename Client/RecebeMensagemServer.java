@@ -18,7 +18,7 @@ public class RecebeMensagemServer implements Runnable{
         try {
             Scanner leitor = new Scanner(socket.getInputStream());
             while (leitor.hasNextLine()){
-                var mensagem = leitor.nextLine();
+                String mensagem = leitor.nextLine();
 
                 if (mensagem.equals("JOGADOR_1")) {
                     System.out.println("Você é o jogador 1 (X)");
@@ -31,13 +31,22 @@ public class RecebeMensagemServer implements Runnable{
                 } else if (mensagem.startsWith("JOGADA_VALIDA")) {
                     System.out.println("Tabuleiro atual:");
 
-                    var partes = mensagem.split(";");
-                    var posicao = Integer.parseInt(partes[1]);
-                    var jogador = partes[2].charAt(0);
+                    String[] partes = mensagem.split(";");
+                    int posicao = Integer.parseInt(partes[1]);
+                    char jogador = partes[2].charAt(0);
 
                     limpaTerminal();
                     atualizarTabuleiro(posicao, jogador);
                     exibirTabuleiro(tabuleiro);
+                } else if (mensagem.equals("JOGADOR_ATUAL;1")) {
+                    System.out.print("Sua vez de jogar (X). Digite a posição (0-8): ");
+                } else if (mensagem.equals("JOGADOR_ATUAL;2")){
+                    System.out.print("Sua vez de jogar (O). Digite a posição (0-8): ");
+                } else if (mensagem.equals("VENCEDORX") || mensagem.equals("VENCEDORO")) {
+                    char jogadorVencedor = mensagem.charAt(8);
+                    System.out.println("O jogador " + jogadorVencedor + " venceu! Parabéns!");
+                    //Criar funcao encerraJogo() Gabriel
+                    //Criar funcao verificaEmpate() Felipe
                 }
             }
             
