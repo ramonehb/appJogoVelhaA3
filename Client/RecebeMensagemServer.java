@@ -4,11 +4,11 @@ import java.io.IOException;
 import java.net.Socket;
 import java.util.Scanner;
 
-public class RecebeMensagemServer implements Runnable{
+public class RecebeMensagemServer implements Runnable {
 
     private Socket socket;
     private char[] tabuleiro;
-    
+
     public RecebeMensagemServer(Socket socket) {
         this.socket = socket;
     }
@@ -17,14 +17,14 @@ public class RecebeMensagemServer implements Runnable{
     public void run() {
         try {
             Scanner leitor = new Scanner(socket.getInputStream());
-            while (leitor.hasNextLine()){
+            while (leitor.hasNextLine()) {
                 String mensagem = leitor.nextLine();
 
                 if (mensagem.equals("JOGADOR_1")) {
                     System.out.println("Você é o jogador 1 (X)");
                 } else if (mensagem.equals("JOGADOR_2")) {
                     System.out.println("Você é o jogador 2 (O)");
-                } else if(mensagem.equals("INICIAR_JOGO")){
+                } else if (mensagem.equals("INICIAR_JOGO")) {
                     System.out.println("Jogo da Velha iniciado");
                     tabuleiro = new char[9];
                     exibirTabuleiro(tabuleiro);
@@ -40,20 +40,23 @@ public class RecebeMensagemServer implements Runnable{
                     exibirTabuleiro(tabuleiro);
                 } else if (mensagem.equals("JOGADOR_ATUAL;1")) {
                     System.out.print("Sua vez de jogar (X). Digite a posição (0-8): ");
-                } else if (mensagem.equals("JOGADOR_ATUAL;2")){
+                } else if (mensagem.equals("JOGADOR_ATUAL;2")) {
                     System.out.print("Sua vez de jogar (O). Digite a posição (0-8): ");
                 } else if (mensagem.equals("VENCEDORX") || mensagem.equals("VENCEDORO")) {
                     char jogadorVencedor = mensagem.charAt(8);
                     System.out.println("O jogador " + jogadorVencedor + " venceu! Parabéns!");
-                    //Criar funcao encerraJogo() Gabriel
-                    //Criar funcao verificaEmpate() Felipe
+                    encerrarJogo();
+                    // Criar funcao verificaEmpate() Felipe
+                } else if (mensagem.equals("FIM_JOGO")) {
+                    System.out.println("O jogo foi encerrado pelo outro jogador.");
+                    encerrarJogo();
                 }
             }
-            
+
         } catch (Exception e) {
             e.printStackTrace();
         }
-        
+
     }
 
     private void exibirTabuleiro(char[] tabuleiro) {
@@ -75,14 +78,23 @@ public class RecebeMensagemServer implements Runnable{
     private void atualizarTabuleiro(int posicao, char jogador) {
         tabuleiro[posicao] = jogador;
     }
-    
-    private void limpaTerminal(){
+
+    private void limpaTerminal() {
         try {
             ProcessBuilder processBuilder = new ProcessBuilder("cmd", "/c", "cls");
 
             Process process = processBuilder.inheritIO().start();
             process.waitFor();
         } catch (IOException | InterruptedException e) {
+            e.printStackTrace();
+        }
+    }
+
+    private void encerrarJogo() {
+        try {
+            socket.close();
+            System.exit(0);
+        } catch (IOException e) {
             e.printStackTrace();
         }
     }
