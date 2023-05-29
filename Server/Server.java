@@ -7,13 +7,14 @@ import java.net.Socket;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Scanner;
+
 public class Server {
 
     private List<PrintWriter> escritores;
     private char[] tabuleiro;
     private int jogadorAtual;
     private int numJogadas;
-    
+
     public static void main(String[] args) {
         new Server().executar();
     }
@@ -50,16 +51,16 @@ public class Server {
         }
     }
 
-    private class TratadorCliente implements Runnable{
+    private class TratadorCliente implements Runnable {
         private Socket socket;
-        
+
         private PrintWriter escritor;
-    
-            public TratadorCliente(Socket socket, PrintWriter escritor) {
-                this.socket = socket;
-                this.escritor = escritor;
-            } 
-    
+
+        public TratadorCliente(Socket socket, PrintWriter escritor) {
+            this.socket = socket;
+            this.escritor = escritor;
+        }
+
         @Override
         public void run() {
             try {
@@ -72,7 +73,7 @@ public class Server {
                     enviarMensagemParaTodos("JOGADOR_ATUAL;" + jogadorAtual);
                 }
 
-                while (leitor.hasNextLine()){
+                while (leitor.hasNextLine()) {
                     String mensagem = leitor.nextLine();
 
                     if (mensagem.startsWith("jogada:")) {
@@ -87,10 +88,11 @@ public class Server {
                                 atualizaTabuleiro(posicao, jogador);
                                 enviarMensagemParaTodos("JOGADA_VALIDA;" + posicao + ";" + jogador);
 
-                                //Criar metodo de verificar se houve ganhador Samuel/Lary
-                                //Criar metodo para acabar o jogo - Vanessa
-                                //Validar empate - Felipe
+                                // Criar metodo de verificar se houve ganhador Samuel/Lary
+                                // Validar empate - Felipe
                             }
+                        } else {
+                            encerrarJogo();
                         }
                     }
                 }
@@ -116,6 +118,18 @@ public class Server {
         private void atualizaTabuleiro(int posicao, char jogador) {
             tabuleiro[posicao] = jogador;
         }
+
+        private void encerrarJogo() {
+            for (PrintWriter escritor : escritores) {
+                escritor.println("FIM_JOGO");
+                escritor.flush();
+            }
+            escritores.clear();
+            tabuleiro = new char[9];
+            for (int i = 0; i < 9; i++) {
+                tabuleiro[i] = '-';
+            }
+            jogadorAtual = 1;
+        }
     }
 }
-
