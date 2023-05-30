@@ -38,15 +38,14 @@ public class RecebeMensagemServer implements Runnable {
                     limpaTerminal();
                     atualizarTabuleiro(posicao, jogador);
                     exibirTabuleiro(tabuleiro);
-                } else if (mensagem.equals("JOGADOR_ATUAL;1")) {
+                } else if (mensagem.contains("JOGADOR_ATUAL;1")) {
                     System.out.print("Sua vez de jogar (X). Digite a posição (0-8): ");
-                } else if (mensagem.equals("JOGADOR_ATUAL;2")) {
+                } else if (mensagem.contains("JOGADOR_ATUAL;2")) {
                     System.out.print("Sua vez de jogar (O). Digite a posição (0-8): ");
                 } else if (mensagem.equals("VENCEDORX") || mensagem.equals("VENCEDORO")) {
                     char jogadorVencedor = mensagem.charAt(8);
                     System.out.println("O jogador " + jogadorVencedor + " venceu! Parabéns!");
                     encerrarJogo();
-                    // Criar funcao verificaEmpate() Felipe
                 } else if (mensagem.equals("EMPATE")) {
                     System.out.println("O jogo terminou em empate!");
                     encerrarJogo();

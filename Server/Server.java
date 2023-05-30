@@ -51,9 +51,9 @@ public class Server {
         }
     }
 
+    // Classe responsavel para enviar as cordenadas para os clientes
     private class TratadorCliente implements Runnable {
         private Socket socket;
-
         private PrintWriter escritor;
 
         public TratadorCliente(Socket socket, PrintWriter escritor) {
@@ -178,6 +178,7 @@ public class Server {
                 tabuleiro[i] = '-';
             }
             jogadorAtual = 1;
+            numJogadas = 0;
         }
     }
 }
