@@ -98,8 +98,6 @@ public class Server {
                                     enviarMensagemParaTodos("JOGADOR_ATUAL;" + jogadorAtual);
                                 }
                             }
-                        } else {
-                            encerrarJogo();
                         }
                     }
                 }
