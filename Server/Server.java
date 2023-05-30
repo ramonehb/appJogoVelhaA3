@@ -90,7 +90,11 @@ public class Server {
                                 if (verificarVitoria(jogador)) {
                                     enviarMensagemParaTodos("VENCEDOR" + jogador);
                                     encerrarJogo();
-                                } 
+                                }
+                                else{
+                                    jogadorAtual = jogadorAtual == 1 ? 2 : 1;
+                                    enviarMensagemParaTodos("JOGADOR_ATUAL;" + jogadorAtual);
+                                }
                             }
                         } else {
                             encerrarJogo();
@@ -142,6 +146,14 @@ public class Server {
                 ganhou = true;
             }
             if (tabuleiro[2] == jogador && tabuleiro[5] == jogador && tabuleiro[8] == jogador) {
+                ganhou = true;
+            }
+
+            // Diagonais
+            if (tabuleiro[0] == jogador && tabuleiro[4] == jogador && tabuleiro[8] == jogador) {
+                ganhou = true;
+            }
+            if (tabuleiro[2] == jogador && tabuleiro[4] == jogador && tabuleiro[6] == jogador) {
                 ganhou = true;
             }
 
