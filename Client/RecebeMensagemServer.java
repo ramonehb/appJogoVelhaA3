@@ -47,6 +47,9 @@ public class RecebeMensagemServer implements Runnable {
                     System.out.println("O jogador " + jogadorVencedor + " venceu! Parabéns!");
                     encerrarJogo();
                     // Criar funcao verificaEmpate() Felipe
+                } else if (mensagem.equals("EMPATE")) {
+                    System.out.println("O jogo terminou em empate!");
+                    encerrarJogo();
                 } else if (mensagem.equals("FIM_JOGO")) {
                     System.out.println("O jogo foi encerrado pelo outro jogador.");
                     encerrarJogo();

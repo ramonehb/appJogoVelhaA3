@@ -90,8 +90,10 @@ public class Server {
                                 if (verificarVitoria(jogador)) {
                                     enviarMensagemParaTodos("VENCEDOR" + jogador);
                                     encerrarJogo();
-                                }
-                                else{
+                                } else if (numJogadas == 9) {
+                                    enviarMensagemParaTodos("EMPATE");
+                                    encerrarJogo();
+                                } else {
                                     jogadorAtual = jogadorAtual == 1 ? 2 : 1;
                                     enviarMensagemParaTodos("JOGADOR_ATUAL;" + jogadorAtual);
                                 }
