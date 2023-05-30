@@ -87,9 +87,10 @@ public class Server {
                             if (validarJogada(posicao)) {
                                 atualizaTabuleiro(posicao, jogador);
                                 enviarMensagemParaTodos("JOGADA_VALIDA;" + posicao + ";" + jogador);
-
-                                // Criar metodo de verificar se houve ganhador Samuel/Lary
-                                // Validar empate - Felipe
+                                if (verificarVitoria(jogador)) {
+                                    enviarMensagemParaTodos("VENCEDOR" + jogador);
+                                    encerrarJogo();
+                                } 
                             }
                         } else {
                             encerrarJogo();
@@ -117,6 +118,39 @@ public class Server {
 
         private void atualizaTabuleiro(int posicao, char jogador) {
             tabuleiro[posicao] = jogador;
+        }
+
+        private boolean verificarVitoria(char jogador) {
+            var ganhou = false;
+
+            // Verificando se houve ganhador nas linhas
+            if (tabuleiro[0] == jogador && tabuleiro[1] == jogador && tabuleiro[2] == jogador) {
+                ganhou = true;
+            }
+            if (tabuleiro[3] == jogador && tabuleiro[4] == jogador && tabuleiro[5] == jogador) {
+                ganhou = true;
+            }
+            if (tabuleiro[6] == jogador && tabuleiro[7] == jogador && tabuleiro[8] == jogador) {
+                ganhou = true;
+            }
+
+            // Verificando se houve ganhador nas colunas
+            if (tabuleiro[0] == jogador && tabuleiro[3] == jogador && tabuleiro[6] == jogador) {
+                ganhou = true;
+            }
+            if (tabuleiro[1] == jogador && tabuleiro[4] == jogador && tabuleiro[7] == jogador) {
+                ganhou = true;
+            }
+            if (tabuleiro[2] == jogador && tabuleiro[5] == jogador && tabuleiro[8] == jogador) {
+                ganhou = true;
+            }
+
+            if (ganhou) {
+                enviarMensagemParaTodos("VENCEDOR" + jogador);
+                return ganhou;
+            }
+
+            return ganhou;
         }
 
         private void encerrarJogo() {
