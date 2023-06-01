@@ -40,6 +40,7 @@ public class Server {
 
                 if (escritores.size() > 1) {
                     System.out.println("O jogo so permite dois jogadores por vez");
+                    return;
                 }
 
                 escritores.add(escritor);
